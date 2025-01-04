@@ -1,5 +1,6 @@
 import {Router} from "express";
 import * as contactsController from "../controllers/contacts.js";
+import { ctrWrapper } from "../utils/ctrWrapper.js";
 
 const contactsRouter = Router();
 
@@ -7,8 +8,8 @@ const contactsRouter = Router();
 //     res.send("<h1>Hello World!</h1>" );
 //   });
 
-contactsRouter.get("/", contactsController.getContactsController);
+contactsRouter.get("/", ctrWrapper(contactsController.getContactsController));
 
-contactsRouter.get("/:contactId", contactsController.getContactByIdController);
+contactsRouter.get("/:contactId", ctrWrapper(contactsController.getContactByIdController));
 
 export default contactsRouter;
