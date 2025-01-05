@@ -12,7 +12,6 @@ export const getContactsController =  async(req, res) => {
     });
   };
 
-
 export const getContactByIdController = async(req, res) => {
       const {contactId} = req.params;
     const contact = await contactsServices.getContactById(contactId);
@@ -41,4 +40,34 @@ export const addContactController = async(req, res) => {
       data: contact,
     });
 };
+
+export const upsertContactByIdController = async(req, res) => {
+    const {contactId} = req.params;
+    const {isNew, contact} = await contactsServices.upsertContactById(contactId, req.body, {upsert: true});
+
+    const status = isNew ? 201 : 200;
+
+    res.status(status).json({
+      status,
+      message: `Successfully upserted contact with id ${contactId}!`,
+      data: contact,
+    });
+};
+
+export const patchContactByIdController = async(req, res) => {
+  const {contactId} = req.params;
+  const contact = await contactsServices.updateContactById(contactId, req.body);
+
+  if (!contact) {
+    throw createError(404, `Contact with id ${contactId} not found!`);
+  }
+
+  res.json({
+    status: 200,
+    message: `Successfully patched contact with id ${contactId}!`,
+    data: contact,
+  });
+};
+
+
 
