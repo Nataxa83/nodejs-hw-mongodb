@@ -23,3 +23,5 @@ export const updateContactById = async (contactId, contact, options = {}) => {
         contact: result.value,
     };
 };
+
+export const deleteContactById = (contactId) => ContactCollection.findOneAndDelete(contactId);
