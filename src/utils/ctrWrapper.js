@@ -5,12 +5,6 @@ export const ctrWrapper = (ctrl) => {
         }
         catch (error) {
             next(error);
-        //     const { status = 500} = error;
-
-        //     res.status(status).json({
-        //         status,
-        //         message: error.message,
-        // });
         }
 
     };
