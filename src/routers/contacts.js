@@ -5,7 +5,7 @@ import * as contactsController from "../controllers/contacts.js";
 import { ctrWrapper } from "../utils/ctrWrapper.js";
 import { validateBody } from "../utils/validateBody.js";
 
-import { isValidId } from "../middlewares/isValidID.js";
+import { isValidId } from "../middlewares/isValidId.js";
 
 import { addContactSchema, updateContactSchema } from "../validation/contacts.js";
 
