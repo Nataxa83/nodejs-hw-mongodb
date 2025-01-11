@@ -1,6 +1,5 @@
 import * as contactsServices from "../services/contacts-services.js";
 import createError from "http-errors";
-import { addContactSchema } from "../validation/contacts.js";
 
 
 export const getContactsController =  async(req, res) => {
@@ -33,38 +32,32 @@ export const getContactByIdController = async(req, res) => {
     };
 
 export const addContactController = async(req, res) => {
-  try{
-    await addContactSchema.validateAsync(req.body, {abortEarly: false});
 
-  } catch (error) {
-    throw createError(400, error.message);
+    const contact = await contactsServices.addContact(req.body);
 
-  }
-
-
-    // const contact = await contactsServices.addContact(req.body);
-
-    // res.status(201).json({
-    //   status: 201,
-    //   message: `Successfully created a contact!`,
-    //   data: contact,
-    // });
+    res.status(201).json({
+      status: 201,
+      message: `Successfully created a contact!`,
+      data: contact,
+    });
 };
 
-// export const upsertContactByIdController = async(req, res) => {
-//     const {contactId} = req.params;
-//     const {isNew, contact} = await contactsServices.updateContactById(contactId, req.body, {upsert: true});
+export const upsertContactByIdController = async(req, res) => {
 
-//     const status = isNew ? 201 : 200;
+    const {contactId} = req.params;
+    const {isNew, contact} = await contactsServices.updateContactById(contactId, req.body, {upsert: true});
 
-//     res.status(status).json({
-//       status,
-//       message: `Successfully upserted contact with id ${contactId}!`,
-//       data: contact,
-//     });
-// };
+    const status = isNew ? 201 : 200;
+
+    res.status(status).json({
+      status,
+      message: `Successfully upserted contact with id ${contactId}!`,
+      data: contact,
+    });
+};
 
 export const patchContactByIdController = async(req, res, next) => {
+
   const {contactId} = req.params;
   const contact = await contactsServices.updateContactById(contactId, req.body);
 

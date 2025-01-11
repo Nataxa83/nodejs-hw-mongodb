@@ -10,7 +10,6 @@ export const updateContactById = async (contactId, contact, options = {}) => {
     const {upsert = false} = options;
     const result = await ContactCollection.findByIdAndUpdate(contactId, contact, {
         upsert,
-        new: true,
         includeResultMetadata: true,
     });
 
