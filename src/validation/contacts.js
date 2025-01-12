@@ -26,7 +26,7 @@ export const addContactSchema = Joi.object({
         "string.max": `Email should be at most ${max} characters long`,
 
     }),
-    isFavorite: Joi.boolean(),
+    isFavourite: Joi.boolean(),
     contactType: Joi.string().valid(...typeList).required().messages({
         "any.required": `Contact type is required`,
     }),
@@ -51,7 +51,7 @@ export const updateContactSchema = Joi.object({
         "string.max": `Email should be at most ${max} characters long`,
 
     }),
-    isFavorite: Joi.boolean(),
+    isFavourite: Joi.boolean(),
     contactType: Joi.string().valid(...typeList)
 });
 
