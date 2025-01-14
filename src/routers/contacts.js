@@ -6,6 +6,7 @@ import { ctrWrapper } from "../utils/ctrWrapper.js";
 import { validateBody } from "../utils/validateBody.js";
 
 import { isValidId } from "../middlewares/isValidId.js";
+import { authenticate } from "../middlewares/authenticate.js";
 
 import { addContactSchema, updateContactSchema } from "../validation/contacts.js";
 
@@ -15,6 +16,8 @@ const contactsRouter = Router();
 // contactsRouter.get("/", (req, res) => {
 //     res.send("<h1>Hello World!</h1>" );
 //   });
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get("/", ctrWrapper(contactsController.getContactsController));
 
