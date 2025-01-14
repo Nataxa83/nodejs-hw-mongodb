@@ -16,3 +16,13 @@ export const authRegisterSchema = Joi.object({
       }),
 
 });
+
+export const authLoginSchema = Joi.object({
+    email: Joi.string().pattern(regularExpEmail).required().messages({
+        'any.required': 'Email is required.'
+    }),
+    password: Joi.string().min(6).required().messages({
+        'string.min': 'The password must be at least 6 characters long.',
+      }),
+
+});
