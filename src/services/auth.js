@@ -12,7 +12,7 @@ export const register = async payload => {
     const user = await UserCollection.findOne({ email});
 
     if (user) {
-        throw createHttpError(409, "User already exists");
+        throw createHttpError(409, "Email in use");
     };
 
     const hashedPassword = await bcrypt.hash(password, 10);
