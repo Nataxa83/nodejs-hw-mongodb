@@ -52,3 +52,15 @@ export const refreshTokenController = async (req, res) => {
     });
 };
 
+export const logoutController = async (req, res) => {
+  if (req.cookies.sessionId){
+    await authServices.logout(req.cookies.sessionId);
+  }
+
+  res.clearCookie("refreshToken");
+  res.clearCookie("sessionId");
+
+  res.status(204).send();
+
+};
+

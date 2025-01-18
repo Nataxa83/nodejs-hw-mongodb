@@ -55,7 +55,7 @@ export const login = async ({email, password}) => {
        ...sessionData,
     });
 };
-    export const refreshToken = async (payload) => {
+export const refreshToken = async (payload) => {
             const oldSession = await SessionCollection.findOne({
                 _id: payload.sessionId,
                 refreshToken: payload.refreshToken,
@@ -77,7 +77,11 @@ export const login = async ({email, password}) => {
                 userId: oldSession.userId,
                 ...sessionData,
             });
-     };
+ };
+
+export const logout = async sessionId => {
+    await SessionCollection.deleteOne({_id: sessionId});
+};
 
 export const getUser = filter => UserCollection.findOne(filter);
 
