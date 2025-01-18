@@ -3,7 +3,6 @@ import {Schema, model} from "mongoose";
 import { handleSaveError, setUpdateSet } from "./hooks.js";
 
 import { regularExpEmail } from "../../constants/auth.js";
-// import { required } from "joi";
 
 const userSchema = new Schema({
     name: {
@@ -20,7 +19,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    
+
 }, {versionKey: false, timestamps: true});
 
 userSchema.post("save", handleSaveError);
