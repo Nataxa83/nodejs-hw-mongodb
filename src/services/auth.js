@@ -3,7 +3,7 @@ import bcrypt   from "bcrypt";
 import {randomBytes} from "crypto";
 
 import SessionCollection from "../db/models/Session.js";
-import UserCollection from "../db/models/user.js";
+import UserCollection from "../db/models/test.js";
 
 import { accessTokenLifeTime, refreshTokenLifeTime } from "../constants/auth.js";
 
