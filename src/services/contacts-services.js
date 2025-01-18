@@ -35,11 +35,13 @@ export const getContacts = async ({
 
 export const getContactById = (contactId) => ContactCollection.findById(contactId);
 
+export const getContact =   (filter) => ContactCollection.findOne(filter);
+
 export const addContact = (contact) => ContactCollection.create(contact);
 
-export const updateContactById = async (contactId, contact, options = {}) => {
+export const updateContactById = async (filter, contact, options = {}) => {
     const {upsert = false} = options;
-    const result = await ContactCollection.findByIdAndUpdate(contactId, contact, {
+    const result = await ContactCollection.findByIdAndUpdate(filter, contact, {
         upsert,
         includeResultMetadata: true,
     });
