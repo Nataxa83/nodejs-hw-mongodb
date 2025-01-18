@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import contactsRouter from "./routers/contacts.js";
 import authRouter from "./routers/auth.js";
@@ -16,6 +17,8 @@ export const setupServer = () => {
       app.use(cors());
 
       app.use(express.json());
+
+      app.use(cookieParser());
 
       // app.use(logger);
 

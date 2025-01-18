@@ -7,6 +7,14 @@ import SessionCollection from "../db/models/session.js";
 
 import { accessTokenLifeTime, refreshTokenLifeTime } from "../constants/auth.js";
 
+const createSessionData = payload => ({
+    accessToken: randomBytes(30).toString("base64"),
+    refreshToken: randomBytes(30).toString("base64"),
+    accessTokenValidUntil: Date.now() + accessTokenLifeTime,
+    refreshTokenValidUntil: Date.now() + refreshTokenLifeTime,
+
+});
+
 export const register = async payload => {
     const {email, password} = payload;
     const user = await UserCollection.findOne({ email});
@@ -21,6 +29,8 @@ export const register = async payload => {
 
     return newUser;
 };
+
+
 
 export const login = async ({email, password}) => {
     const user = await UserCollection.findOne({email});
@@ -37,17 +47,37 @@ export const login = async ({email, password}) => {
 
     await SessionCollection.deleteOne({userId: user._id});
 
-    const accessToken = randomBytes(30).toString("base64");
-    const refreshToken = randomBytes(30).toString("base64");
+    const sessionData = createSessionData();
+
 
     return SessionCollection.create({
         userId: user._id,
-        accessToken,
-        refreshToken,
-        accessTokenValidUntil: Date.now() + accessTokenLifeTime,
-        refreshTokenValidUntil: Date.now() + refreshTokenLifeTime,
+       ...sessionData,
     });
 };
+    export const refreshToken = async (payload) => {
+            const oldSession = await SessionCollection.findOne({
+                _id: payload.sessionId,
+                refreshToken: payload.refreshToken,
+            });
+
+            if (!oldSession) {
+                throw createHttpError(401, "Session not found");
+            };
+
+            if(Date.now() > oldSession.refreshTokenValidUntil) {
+                throw createHttpError(401, "Session expired");
+            };
+
+            await SessionCollection.deleteOne({_id: payload.sessionId});
+
+            const sessionData = createSessionData();
+
+            return SessionCollection.create({
+                userId: oldSession.userId,
+                ...sessionData,
+            });
+     };
 
 export const getUser = filter => UserCollection.findOne(filter);
 
