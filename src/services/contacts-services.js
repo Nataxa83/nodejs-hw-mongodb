@@ -41,7 +41,7 @@ export const addContact = (contact) => ContactCollection.create(contact);
 
 export const updateContactById = async (filter, contact, options = {}) => {
     const {upsert = false} = options;
-    const result = await ContactCollection.findByIdAndUpdate(filter, contact, {
+    const result = await ContactCollection.findOneAndUpdate(filter, contact, {
         upsert,
         includeResultMetadata: true,
     });
