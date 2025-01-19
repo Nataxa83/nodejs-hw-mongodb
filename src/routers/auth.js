@@ -11,6 +11,8 @@ const authRouter = Router();
 
 authRouter.post("/register", validateBody(authRegisterSchema), ctrWrapper(authController.registerController));
 
+authRouter.get("/verify", ctrWrapper(authController.verifyEmailController));
+
 authRouter.post("/login", validateBody(authLoginSchema), ctrWrapper(authController.loginController));
 
 authRouter.post("/refresh",ctrWrapper(authController.refreshTokenController));
