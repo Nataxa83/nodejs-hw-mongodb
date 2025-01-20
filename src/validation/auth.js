@@ -26,3 +26,14 @@ export const authLoginSchema = Joi.object({
       }),
 
 });
+
+export const requestResetEmailSchema = Joi.object({
+    email: Joi.string().pattern(regularExpEmail).required().messages({
+        'any.required': 'Email is required.'
+    }),
+});
+
+export const resetPasswordSchema = Joi.object({
+    password: Joi.string().required(),
+    token: Joi.string().required()
+});
