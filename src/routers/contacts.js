@@ -7,6 +7,7 @@ import { validateBody } from "../utils/validateBody.js";
 
 import { isValidId } from "../middlewares/isValidId.js";
 import { authenticate } from "../middlewares/authenticate.js";
+import { upload } from "../middlewares/upload.js";
 
 import { addContactSchema, updateContactSchema } from "../validation/contacts.js";
 
@@ -23,7 +24,7 @@ contactsRouter.get("/", ctrWrapper(contactsController.getContactsController));
 
 contactsRouter.get("/:contactId", isValidId, ctrWrapper(contactsController.getContactByIdController));
 
-contactsRouter.post("/", validateBody(addContactSchema),   ctrWrapper(contactsController.addContactController));
+contactsRouter.post("/", upload.single('photo'), validateBody(addContactSchema),   ctrWrapper(contactsController.addContactController));
 
 contactsRouter.put("/:contactId", isValidId, validateBody(addContactSchema), ctrWrapper(contactsController.upsertContactByIdController));
 

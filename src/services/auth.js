@@ -118,12 +118,16 @@ export const resetPassword = async payload => {
     });
     if (!user) {
         throw createHttpError(404, 'User not found');
+
     }
-    const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+    await SessionCollection.deleteOne({userId: user._id});
+    
+    const hashedPassword = await bcrypt.hash(payload.password, 10);
 
     await UserCollection.updateOne(
         { _id: user._id },
-        { password: encryptedPassword },
+        { password: hashedPassword },
     );
 };
 
