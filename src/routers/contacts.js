@@ -20,15 +20,15 @@ const contactsRouter = Router();
 
 contactsRouter.use(authenticate);
 
-contactsRouter.get("/", ctrWrapper(contactsController.getContactsController));
+contactsRouter.get("/", upload.single('photo'), ctrWrapper(contactsController.getContactsController));
 
 contactsRouter.get("/:contactId", isValidId, ctrWrapper(contactsController.getContactByIdController));
 
 contactsRouter.post("/", upload.single('photo'), validateBody(addContactSchema),   ctrWrapper(contactsController.addContactController));
 
-contactsRouter.put("/:contactId", isValidId, validateBody(addContactSchema), ctrWrapper(contactsController.upsertContactByIdController));
+contactsRouter.put("/:contactId", upload.single('photo'), isValidId, validateBody(addContactSchema), ctrWrapper(contactsController.upsertContactByIdController));
 
-contactsRouter.patch("/:contactId", isValidId, validateBody(updateContactSchema), ctrWrapper(contactsController.patchContactByIdController));
+contactsRouter.patch("/:contactId", upload.single('photo'), isValidId, validateBody(updateContactSchema), ctrWrapper(contactsController.patchContactByIdController));
 
 contactsRouter.delete("/:contactId", isValidId, ctrWrapper(contactsController.deleteContactByIdController));
 
