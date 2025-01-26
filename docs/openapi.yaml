@@ -12,7 +12,7 @@ tags:
     description: Operations about contacts.
 servers:
   - url: http://localhost:3000
-  - url: https://app-with-photo.onrender.com
+  - url: https://nodejs-hw-swagger-yfuu.onrender.com
 paths:
   /contacts:
     get:
