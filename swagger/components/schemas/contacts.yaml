@@ -11,7 +11,7 @@ properties:
     type: string
     example: 65e4decdd286b30065d54af9
   name:
-    description: "Student's name"
+    description: "Contact's name"
     type: string
     example: 'Harry Potter'
   phoneNumber:
